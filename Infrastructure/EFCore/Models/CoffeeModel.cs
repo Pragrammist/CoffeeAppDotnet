@@ -1,12 +1,7 @@
-
-
-using System.ComponentModel.DataAnnotations;
-
 namespace EFCore.Models;
-public class Coffee
-{
-    public int Id { get; set; }
 
+public class Coffee : EntityBase
+{
     public string Name { get; set; } = null!;
 
     public string Note { get; set; } = null!;
@@ -16,8 +11,4 @@ public class Coffee
     public float AvgScore { get; set; }
 
     public int ScoreCount { get; set; }
-
-    public DateTime CreationDate { get; set; }
-
-    public DateTime? LastUpdatedDate { get; set; }
 }
