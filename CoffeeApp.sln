@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9AC03EEF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfcoreTests", "Tests\EfcoreTests\EfcoreTests.csproj", "{37994049-29EC-4472-AE40-3F9692ED3FFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{37994049-29EC-4472-AE40-3F9692ED3FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37994049-29EC-4472-AE40-3F9692ED3FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37994049-29EC-4472-AE40-3F9692ED3FFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{071B697A-6461-4C93-960F-77A6920B9D0B} = {D06FBC3C-06DA-41B8-87ED-D72DF45822C1}
