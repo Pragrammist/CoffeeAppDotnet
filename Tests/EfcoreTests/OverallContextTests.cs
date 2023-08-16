@@ -58,7 +58,7 @@ public class OverallContextTests
 
     Coffee GetCoffeeTestData() => new Coffee{
         AvgScore = 4.23f,
-        CreationDate = DateTime.Now,
+        CreatedDate = DateTime.Now,
         Name = "coffeName",
         Note = "note",
         Photos = "phot.jpg;phto2.jpg",
@@ -68,14 +68,14 @@ public class OverallContextTests
         Email = "some@em",
         Login = "eqwef",
         Password = "supperhash",
-        RegisteredDate = DateTime.Now
+        CreatedDate = DateTime.Now
     };
 
 
     Comment GetCommentModel(int coffeId, int userId) => new Comment{
         CoffeeId = coffeId,
         UserId = userId,
-        CreationDate = DateTime.Now,
+        CreatedDate = DateTime.Now,
         Photos = "photos.png;p.jpg",
         Score = 5,
         Text = "WHOA!"
