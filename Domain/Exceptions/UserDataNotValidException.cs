@@ -15,6 +15,11 @@ public class DataNotValidException : CoffeeApplicationException
     public DataNotValidException(object data) : base($"Data invalid: {data}", 400) { }
 }
 
+public class PermissionDenied : CoffeeApplicationException
+{
+    public PermissionDenied(object data) : base($"Perrmission denied: {data}", 400) { }
+}
+
 public class NotFoundException : CoffeeApplicationException
 {
     public NotFoundException(object data) : base($"id was not found: {data}", 404) { }

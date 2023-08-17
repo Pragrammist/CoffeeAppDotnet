@@ -1,3 +1,4 @@
+using Domain;
 using Domain.Exceptions;
 using EFCore;
 using EFCore.Models;
@@ -33,9 +34,9 @@ namespace Services
 
             return await Task.FromResult(user.Adapt<UserDto>());
         }
-        public async Task<UserDto> ChangeLogin(string login, int id)
+        public async Task<UserDto> ChangeLoginForModerator(string login, int id)
         {
-            var user = await _dbRepository.GetByIdAsync<User>(id) ?? throw new NotFoundException(id);
+            var user = await GetUserAndCheckRole(id);
 
             user.Login = login;
 
@@ -56,23 +57,38 @@ namespace Services
             return newUserId;
         }
 
-        public async Task DeleteUser(int id)
+        public async Task DeleteModerator(int id)
         {
-            await _dbRepository.Delete(id);
+            await GetUserAndCheckRole(id);
+
+            await _dbRepository.Delete<User>(id);
 
             await _dbRepository.Context.SaveChangesAsync();
         }
 
-        public async Task<UserDto> GenerateNewPassword(int id)
+        public async Task<UserDto> GenerateNewPasswordForModerator(int id)
         {
-            var user = await _dbRepository.GetByIdAsync<User>(id);
+            var user = await GetUserAndCheckRole(id);
 
             user.Password = _passwordHasher.HashPassword(Path.GetRandomFileName());
 
             return await base.Edit(user, true);
         }
 
-        public IEnumerable<UserDto> GetUsers() => base._dbRepository.GetItems<User>().ProjectToType<UserDto>();
+        async Task<User> GetUserAndCheckRole(int id)
+        {
+            var user = await _dbRepository.GetByIdAsync<User>(id);
+
+            if (user.Role != UserRole.MODERATOR)
+                throw new PermissionDenied($"user with {id} isn't moderator");
+
+            return user;
+        }
+
+        public IQueryable<UserDto> GetModerators() => base._dbRepository
+            .GetItems<User>()
+            .Where(u => u.Role == UserRole.MODERATOR)
+            .ProjectToType<UserDto>();
 
 
 

@@ -8,12 +8,12 @@ namespace Services.Contracts
 
         public Task<UserDto> LoginUser(LoginUserDto loginUserData);
 
-        public IEnumerable<UserDto> GetUsers();
+        public IQueryable<UserDto> GetModerators();
 
-        public Task<UserDto> ChangeLogin(string login, int id);
+        public Task<UserDto> ChangeLoginForModerator(string login, int id);
 
-        public Task<UserDto> GenerateNewPassword(int id);
+        public Task<UserDto> GenerateNewPasswordForModerator(int id);
 
-        public Task DeleteUser(int id);
+        public Task DeleteModerator(int id);
     }
 }

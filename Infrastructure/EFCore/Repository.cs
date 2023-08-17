@@ -13,7 +13,7 @@ namespace EFCore
         Task<int> AddAsync(EntityBase entity);
         void Delete(EntityBase entity);
 
-        Task Delete(int id);
+        Task Delete<TEntity>(int id) where TEntity : EntityBase; 
         IQueryable<TEntity> GetItems<TEntity>() where TEntity : EntityBase;
     }
 
@@ -28,7 +28,7 @@ namespace EFCore
         public async Task<TEntity> GetByIdAsync<TEntity>(int id) 
             where TEntity : EntityBase
         {
-            var entity = await Context.FindAsync<TEntity>(id) ?? throw new DataNotValidException($"id  invalid {id}");
+            var entity = await Context.FindAsync<TEntity>(id) ?? throw new NotFoundException($"id  invalid {id}");
             return entity;
         }
 
@@ -58,9 +58,9 @@ namespace EFCore
             Context.Update(entity);
         }
 
-        public async Task Delete(int id)
+        public async Task Delete<TEntity>(int id) where TEntity : EntityBase
         {
-            var user = await GetByIdAsync<EntityBase>(id);
+            var user = await GetByIdAsync<TEntity>(id);
             Delete(user);
         }
     }

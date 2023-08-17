@@ -1,6 +1,9 @@
 using Services;
 using EFCore;
 using Host.Middlewares;
+using Services.Contracts;
+using Services.Dtos.User;
+using Domain.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +31,29 @@ builder.Services.AddAuthorization();
 builder.Services.RegisterDataLayer(builder.Configuration);
 builder.Services.AddAppServices(builder.Configuration);
 
+
+
 var app = builder.Build();
+
+//init first users
+{
+    using var scope = app.Services.CreateScope();
+    var userService = scope.ServiceProvider.GetService<IUserService>() ?? throw new NullReferenceException("IUserService is null when init db");
+    var firstUsers = builder.Configuration.GetSection("FirstUsers").Get<CreateUserDto[]>() ?? throw new NullReferenceException("First users are null");
+    foreach (var user in firstUsers)
+    {
+        try
+        {
+            await userService.CreateUser(user);
+        }
+        catch (UserDataNotValidException)
+        {
+            continue;
+        }
+        
+    }
+}
+
 
 // Configure the HTTP request pipeline.
 
@@ -46,5 +71,6 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+
 
 app.Run();
