@@ -11,32 +11,46 @@ namespace Services.Common
             
         }
 
+        
+
         public async Task<TDto> Create(TDto item, bool withSave = true)
         {
 
             var entity = item?.Adapt<TEntity>() ?? throw new NullReferenceException("Item haven't mapped. Map result is null");
 
-            await _dbRepository.AddAsync(entity);
+            return await Create(entity, withSave);
+        }
+
+        public async Task<TDto> Create(TEntity item, bool withSave = true)
+        {
+            await _dbRepository.AddAsync(item);
             if (withSave)
             {
                 await _dbRepository.Context.SaveChangesAsync();
             }
 
-            return entity.Adapt<TDto>();
+            return item.Adapt<TDto>();
         }
 
         public async Task<TDto> Edit(TDto item, bool withSave = true)
         {
             var entity = item?.Adapt<TEntity>() ?? throw new NullReferenceException("Item haven't mapped. Map result is null");
 
-            _dbRepository.Update(entity);
+            
+            return await Edit(entity, withSave);
+        }
+        
+        public async Task<TDto> Edit(TEntity item, bool withSave = true)
+        {
+            _dbRepository.Update(item);
             if (withSave)
             {
                 await _dbRepository.Context.SaveChangesAsync();
             }
 
-            return _dbRepository.Adapt<TDto>();
+            return item.Adapt<TDto>();
         }
+
         public async Task Delete(TDto dto, bool withSave = true)
         {
             var entity = dto?.Adapt<TEntity>() ?? throw new NullReferenceException("Item haven't mapped. Map result is null");

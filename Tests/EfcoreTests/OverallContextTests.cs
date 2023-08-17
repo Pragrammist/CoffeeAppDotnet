@@ -41,9 +41,23 @@ public class OverallContextTests
         _dbContexts.OverallDbContext.Comments.Count().Should().BeGreaterThan(0);
     }
 
+    [Fact]
+    public void AddingRefreshTokenTest()
+    {
+        AddUserTestData();
+        var user = _dbContexts.OverallDbContext.Users.First();
+        var token = GetRefreshToken(user);
+        _dbContexts.OverallDbContext.Add(token);
+
+        _dbContexts.OverallDbContext.SaveChanges();
+        _dbContexts.OverallDbContext.RefreshTokens.Count().Should().BeGreaterThan(0);
+    }
+
     void AddCommentTestData()
     {
         AddUserTestData();
+
+
         AddCoffeeTestData();
 
 
@@ -55,7 +69,12 @@ public class OverallContextTests
     }
 
     
+    RefreshToken GetRefreshToken(User user) => new RefreshToken{
+      Expires = DateTimeOffset.Now,
+      Token = "supertoken",
+      User = user
 
+    };
     Coffee GetCoffeeTestData() => new Coffee{
         AvgScore = 4.23f,
         CreatedDate = DateTime.Now,

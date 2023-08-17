@@ -23,6 +23,5 @@ public class Comment : EntityBase
 
     public int? CommentId { get; set; }
 
-    public bool IsChangedByModerator => LastChangedDate is not null;
 
 }

@@ -1,5 +1,6 @@
 using EFCore.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace EFCore.DbContexts
 {
@@ -11,10 +12,10 @@ namespace EFCore.DbContexts
 
         public DbSet<Coffee> Coffees { get; set; } = null!;
 
-
-        public OverallDbContext(DbContextOptions<OverallDbContext> options) : base(options)
+        public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
+        public OverallDbContext(DbContextOptions<OverallDbContext> options, IConfiguration configuration) : base(options)
         {
-            
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,7 +25,7 @@ namespace EFCore.DbContexts
             modelBuilder.Entity<Comment>().HasOne<Comment>().WithMany().HasForeignKey(k => k.CommentId);
             modelBuilder.Entity<Comment>().HasOne(c => c.Coffee).WithMany().HasForeignKey(k => k.CoffeeId);
             modelBuilder.Entity<Comment>().HasOne(c => c.User).WithMany().HasForeignKey(k => k.UserId);
-            
+            modelBuilder.Entity<RefreshToken>().HasOne(f => f.User).WithOne().HasForeignKey<RefreshToken>(f => f.UserId);
             
             
             modelBuilder.Entity<User>().ToTable(t => t

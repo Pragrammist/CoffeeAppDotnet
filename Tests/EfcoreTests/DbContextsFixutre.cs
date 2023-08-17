@@ -14,11 +14,14 @@ public class DbContextsFixutre : IDisposable
         var optBuilder = new DbContextOptionsBuilder<OverallDbContext>();
         _connection = new SqliteConnection("Filename=:memory:");
         _connection.Open();
-        var dbContextOpt = optBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=coffeeapptestdb;Trusted_Connection=True;").Options;//.UseSqlite(_connection).Options;
+        //.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=coffeeapptestdb;Trusted_Connection=True;").Options;//
+        var dbContextOpt = optBuilder.UseSqlite(_connection).Options;
         
         _overallDbContext = new OverallDbContext(dbContextOpt);
         _overallDbContext.Database.EnsureCreated();
     }
+    
+
     
 
     public SqliteConnection SqliteConnection {get => _connection; }

@@ -1,38 +1,42 @@
 using EFCore.Models;
 using EFCore.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using Domain.Exceptions;
 
 namespace EFCore
 {
     public interface IRepository
     {
-        OverallDbContext Context { get; }
-        Task<TEntity?> GetByIdAsync<TEntity>(int Id) where TEntity : EntityBase;
+        DbContext Context { get; }
+        Task<TEntity> GetByIdAsync<TEntity>(int Id) where TEntity : EntityBase;
         void Update(EntityBase entity);
         Task<int> AddAsync(EntityBase entity);
         void Delete(EntityBase entity);
+
+        Task Delete(int id);
         IQueryable<TEntity> GetItems<TEntity>() where TEntity : EntityBase;
     }
 
     public class RepositoryImpl : IRepository
     {
-        public OverallDbContext Context {  get; private set; }  
+        public DbContext Context {  get; private set; }  
 
-        public RepositoryImpl(OverallDbContext context)
+        public RepositoryImpl(DbContext context)
         {
             Context = context;
         }
-        public async Task<TEntity?> GetByIdAsync<TEntity>(int id) 
+        public async Task<TEntity> GetByIdAsync<TEntity>(int id) 
             where TEntity : EntityBase
         {
-            var entity = await Context.FindAsync<TEntity>(id);
+            var entity = await Context.FindAsync<TEntity>(id) ?? throw new DataNotValidException($"id  invalid {id}");
             return entity;
         }
 
         
         public IQueryable<TEntity> GetItems<TEntity>()
             where TEntity : EntityBase 
-            => Context.Set<TEntity>();
+            => Context.Set<TEntity>()
+            .Where(i => !i.IsDeleted);
 
         public void Update(EntityBase entity)
         {
@@ -54,5 +58,10 @@ namespace EFCore
             Context.Update(entity);
         }
 
+        public async Task Delete(int id)
+        {
+            var user = await GetByIdAsync<EntityBase>(id);
+            Delete(user);
+        }
     }
 }

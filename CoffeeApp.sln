@@ -5,21 +5,22 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{D06FBC3C-06DA-41B8-87ED-D72DF45822C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore", "Infrastructure\EFCore\EFCore.csproj", "{071B697A-6461-4C93-960F-77A6920B9D0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore", "Infrastructure\EFCore\EFCore.csproj", "{071B697A-6461-4C93-960F-77A6920B9D0B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9AC03EEF-8707-4ED4-A0F6-27428E841618}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfcoreTests", "Tests\EfcoreTests\EfcoreTests.csproj", "{37994049-29EC-4472-AE40-3F9692ED3FFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EfcoreTests", "Tests\EfcoreTests\EfcoreTests.csproj", "{37994049-29EC-4472-AE40-3F9692ED3FFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{B87E14C3-BFA7-4F65-B57D-144E927D1CC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "Host\Host.csproj", "{430D4169-8D46-44CB-97B4-2EC320DCE2A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{071B697A-6461-4C93-960F-77A6920B9D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -34,9 +35,23 @@ Global
 		{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC0C3C09-6DA9-452F-BC01-1201000BA1E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B87E14C3-BFA7-4F65-B57D-144E927D1CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B87E14C3-BFA7-4F65-B57D-144E927D1CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B87E14C3-BFA7-4F65-B57D-144E927D1CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B87E14C3-BFA7-4F65-B57D-144E927D1CC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{430D4169-8D46-44CB-97B4-2EC320DCE2A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{430D4169-8D46-44CB-97B4-2EC320DCE2A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{430D4169-8D46-44CB-97B4-2EC320DCE2A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{430D4169-8D46-44CB-97B4-2EC320DCE2A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{071B697A-6461-4C93-960F-77A6920B9D0B} = {D06FBC3C-06DA-41B8-87ED-D72DF45822C1}
 		{37994049-29EC-4472-AE40-3F9692ED3FFE} = {9AC03EEF-8707-4ED4-A0F6-27428E841618}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50DFF5BD-3D3B-4893-A73D-6DA5D372AB54}
 	EndGlobalSection
 EndGlobal
