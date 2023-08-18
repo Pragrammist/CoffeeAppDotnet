@@ -6,7 +6,7 @@ using Mapster;
 using Services.Common;
 using Services.Contracts;
 using Services.Dtos.User;
-
+using System.Text;
 
 namespace Services
 {
@@ -66,14 +66,28 @@ namespace Services
             await _dbRepository.Context.SaveChangesAsync();
         }
 
-        public async Task<UserDto> GenerateNewPasswordForModerator(int id)
+        public async Task<string> GenerateNewPasswordForModerator(int id)
         {
             var user = await GetUserAndCheckRole(id);
 
-            user.Password = _passwordHasher.HashPassword(Path.GetRandomFileName());
+            var newPassword = NewRandomPassword();
+            user.Password = _passwordHasher.HashPassword(newPassword);
 
-            return await base.Edit(user, true);
+            await base.Edit(user, true);
+
+            return newPassword;
         }
+        string NewRandomPassword()
+        {
+            var newPassword = Path.GetRandomFileName().Replace(".",string.Empty);
+
+            var newPasswordBytes = Encoding.UTF8.GetBytes(newPassword);
+
+            var base64Password = Convert.ToBase64String(newPasswordBytes).Replace("=", string.Empty);
+
+            return base64Password;
+        }
+            
 
         async Task<User> GetUserAndCheckRole(int id)
         {

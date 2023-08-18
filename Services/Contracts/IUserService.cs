@@ -12,7 +12,7 @@ namespace Services.Contracts
 
         public Task<UserDto> ChangeLoginForModerator(string login, int id);
 
-        public Task<UserDto> GenerateNewPasswordForModerator(int id);
+        public Task<string> GenerateNewPasswordForModerator(int id);
 
         public Task DeleteModerator(int id);
     }

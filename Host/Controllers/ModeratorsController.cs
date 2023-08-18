@@ -12,10 +12,10 @@ namespace Host.Controllers
     [ApiController]
     [Route("[controller]")]
     [Authorize(Roles = "ADMIN")]
-    public class UserController : ControllerBase
+    public class ModeratorsController : ControllerBase
     {
         IUserService _userService;
-        public UserController(IUserService userService) 
+        public ModeratorsController(IUserService userService) 
         {
             _userService = userService;
 
@@ -43,20 +43,24 @@ namespace Host.Controllers
         [HttpPut("password")]
         public async Task<IActionResult> GeneratePaswsord(int userId)
         {
-            var user = await _userService.GenerateNewPasswordForModerator(userId);
+            var newPassword = await _userService.GenerateNewPasswordForModerator(userId);
 
-            return OkResultWithUser(user);
+            return Ok( new
+                {
+                    Password = newPassword
+                }
+            );
         }
 
         [HttpPut("login")]
-        public async Task<IActionResult> GenerateLogin(string login, int userId)
+        public async Task<IActionResult> GenerateLogin([FromBody]ChangeModeratorLogin data)
         {
-            var user = await _userService.ChangeLoginForModerator(login, userId);
+            var user = await _userService.ChangeLoginForModerator(data.Login, data.UserId);
 
             return OkResultWithUser(user);
         }
 
-        [HttpGet("moderators")]
+        [HttpGet]
         public IAsyncEnumerable<UserDto> GetUsers()
         => _userService.GetModerators().AsAsyncEnumerable();
 
