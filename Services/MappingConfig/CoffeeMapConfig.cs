@@ -1,39 +1,28 @@
 ﻿using EFCore.Models;
 using Mapster;
 using Services.Dtos.Coffee;
-using Services.Dtos.Comment;
+using static Domain.Consts.SepartaratorsConsts;
 
 namespace Services.MappingConfig
 {
     public static class CoffeeMapConfig
     {
-        const char SEPARATOR = ';';
-        public static void ConfigCoffeeMapping()
+
+        public static void SetCoffeeMapping()
         {
-            TypeAdapterConfig<CreateCoffeeDto, Coffee>.NewConfig().AfterMapping((source, dest) =>
-            {
-                dest.Photos = String.Join(SEPARATOR, source.Photos);
-            });
+            TypeAdapterConfig<Coffee, CoffeeDto>.NewConfig().Map(d => d.Photo, s => s.SplitPhotos().First());
 
-            TypeAdapterConfig<Coffee, CoffeeDto>.NewConfig().AfterMapping((source, dest) =>
-            {
-                dest.Photo = source.SplitPhotos().First();
-            });
+            TypeAdapterConfig<Coffee, CoffeeDetailsDto>.NewConfig().Map(d => d.Photos, s => s.SplitPhotos());
+            
+            //.AfterMapping((source,dest) =>
+            //{
+            //dest.Photos = source.SplitPhotos();
+            //});
 
-            TypeAdapterConfig<Coffee, CoffeeDetailsDto>.NewConfig().AfterMapping((source,dest) =>
-            {
-                dest.Photos = source.SplitPhotos();
-            });
-
-
-            TypeAdapterConfig<EditCoffeeDto, Coffee>.NewConfig().AfterMapping((source, dest) =>
-            {
-                dest.Photos = String.Join(SEPARATOR, source.Photos);
-            });
 
         }
 
-        static IEnumerable<string> SplitPhotos(this Coffee coffee) => coffee.Photos.Split(SEPARATOR);
+        static IEnumerable<string> SplitPhotos(this Coffee coffee) => coffee.Photos.Split(FILES_SEPORATOR_IN_STORE);
 
         
     }

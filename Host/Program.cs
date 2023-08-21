@@ -4,9 +4,12 @@ using Host.Middlewares;
 using Services.Contracts;
 using Services.Dtos.User;
 using Domain.Exceptions;
+using Host.Infrastructure.Mapping.Coffee;
+using Domain.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
+CoffeeMappingSettings.SetCoffeeMapping();
 
 // Add services to the container.
 
@@ -25,7 +28,10 @@ builder.Services.AddAuthentication(x =>
 
 builder.Services.AddCors();
 builder.Services.AddControllers();
+
+builder.Services.Configure<FileStoringOptions>(builder.Configuration.GetSection("Files"));
 builder.Services.Configure<BearerAccessTokenOptions>(builder.Configuration.GetSection("Auth:Bearer"));
+
 builder.Services.AddAuthorization();
 
 builder.Services.RegisterDataLayer(builder.Configuration);

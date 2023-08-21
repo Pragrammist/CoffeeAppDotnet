@@ -11,6 +11,8 @@ namespace Host.Infrastructure.Consts
         public const int MIN_LENGTH_PASSWORD = 8;
         public const int MAX_LENGTH_PASSWORD = 30;
 
+        
+
         public const string MESSAGE_LENGTH_FOR_INVALID_LOGIN = "Логин сликшом короткий или слишком длинный";
         public const string MESSAGE_LENGTH_FOR_INVALID_PASSWORD = "Пароль сликшом короткий или слишком длинный";
 

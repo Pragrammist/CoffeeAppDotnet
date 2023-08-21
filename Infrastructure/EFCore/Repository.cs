@@ -28,7 +28,7 @@ namespace EFCore
         public async Task<TEntity> GetByIdAsync<TEntity>(int id) 
             where TEntity : EntityBase
         {
-            var entity = await Context.FindAsync<TEntity>(id) ?? throw new NotFoundException($"id  invalid {id}", 405);
+            var entity = await Context.FindAsync<TEntity>(id) ?? throw new NotFoundException($"id  invalid {id}");
             return entity;
         }
 

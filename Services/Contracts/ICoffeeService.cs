@@ -8,9 +8,9 @@ namespace Services.Contracts
 
         public Task<CoffeeDetailsDto> GetCoffeeDetails(int coffeeId);
 
-        public Task<CoffeeDetailsDto> CreateCoffeeDto(CreateCoffeeDto data);
+        public Task<CoffeeDetailsDto> CreateCoffee(CreateCoffeeDto data);
 
-        public Task DeleteCoffeeDto(int coffeeId);
+        public Task DeleteCoffee(int coffeeId);
 
         public Task<CoffeeDetailsDto> EditCoffee(EditCoffeeDto data);
     }

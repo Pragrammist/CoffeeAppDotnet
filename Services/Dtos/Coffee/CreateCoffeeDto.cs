@@ -6,6 +6,6 @@
 
         public string Note { get; set; } = null!;
 
-        public IEnumerable<string> Photos { get; set; } = null!;
+        public string Photos { get; set; } = null!;
     }
 }

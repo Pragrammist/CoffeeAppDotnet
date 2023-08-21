@@ -29,6 +29,6 @@ public class PermissionDenied : CoffeeApplicationException
 
 public class NotFoundException : CoffeeApplicationException
 {
-    public NotFoundException(object data, int messageStatusCode) : base($"id was not found: {data}", 404, messageStatusCode) { }
+    public NotFoundException(object data) : base($"id was not found: {data}", 404, 405) { }
 }
 
