@@ -13,7 +13,7 @@ namespace EFCore
                 throw new NullReferenceException("connection string is null");
 
             
-            services.AddDbContext<DbContext, OverallDbContext>(opt =>
+            services.AddDbContext<OverallDbContext>(opt =>
             {
                 opt.UseSqlServer(connection);
             });

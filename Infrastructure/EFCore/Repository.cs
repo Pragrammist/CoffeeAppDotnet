@@ -7,33 +7,33 @@ namespace EFCore
 {
     public interface IRepository
     {
-        DbContext Context { get; }
+        OverallDbContext Context { get; }
         Task<TEntity> GetByIdAsync<TEntity>(int Id) where TEntity : EntityBase;
         void Update(EntityBase entity);
         Task<int> AddAsync(EntityBase entity);
         void Delete(EntityBase entity);
 
         Task Delete<TEntity>(int id) where TEntity : EntityBase; 
-        IQueryable<TEntity> GetItems<TEntity>() where TEntity : EntityBase;
+        IQueryable<TEntity> Set<TEntity>() where TEntity : EntityBase;
     }
 
     public class RepositoryImpl : IRepository
     {
-        public DbContext Context {  get; private set; }  
+        public OverallDbContext Context {  get; private set; }  
 
-        public RepositoryImpl(DbContext context)
+        public RepositoryImpl(OverallDbContext context)
         {
             Context = context;
         }
         public async Task<TEntity> GetByIdAsync<TEntity>(int id) 
             where TEntity : EntityBase
         {
-            var entity = await Context.FindAsync<TEntity>(id) ?? throw new NotFoundException($"id  invalid {id}");
+            var entity = await Context.FindAsync<TEntity>(id) ?? throw new NotFoundException($"id  invalid {id}", 405);
             return entity;
         }
 
         
-        public IQueryable<TEntity> GetItems<TEntity>()
+        public IQueryable<TEntity> Set<TEntity>()
             where TEntity : EntityBase 
             => Context.Set<TEntity>()
             .Where(i => !i.IsDeleted);

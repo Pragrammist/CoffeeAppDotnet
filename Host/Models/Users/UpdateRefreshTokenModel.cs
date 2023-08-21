@@ -1,4 +1,4 @@
-﻿namespace Host.Models
+﻿namespace Host.Models.Users
 {
     public class UpdateRefreshTokenModel
     {

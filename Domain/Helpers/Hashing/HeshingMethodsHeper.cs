@@ -1,12 +1,12 @@
-﻿using Services.Contracts;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Services
+
+namespace Domain.Helpers.Hashing
 {
-    public class HasherService : IHasherService
+    public static class HeshingMethodsHeper
     {
-        public string GetHashForToken<TValue>(TValue value)
+        public static string GetRandomHash<TValue>(this TValue value)
         {
             var hashCodeOfValue = value?.GetHashCode() ?? throw new NullReferenceException("input value is null");
 
@@ -16,12 +16,13 @@ namespace Services
             return base64;
         }
 
-        public string HashPassword(string password) =>
+        
+
+        public static string Hash(this string password) =>
             Encoding.UTF8.GetString(
                 MD5.HashData(
                     Encoding.UTF8.GetBytes(password)
                 )
             );
     }
-
 }

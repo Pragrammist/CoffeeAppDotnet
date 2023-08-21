@@ -1,4 +1,4 @@
-using Domain;
+using Domain.Enums;
 using Services.Dtos.BaseDtos;
 
 namespace Services.Dtos.User

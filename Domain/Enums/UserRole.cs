@@ -1,4 +1,4 @@
-namespace Domain
+namespace Domain.Enums
 {
     public enum UserRole
     {
@@ -8,5 +8,5 @@ namespace Domain
 
     }
 
-    
+
 }

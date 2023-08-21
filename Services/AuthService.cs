@@ -1,5 +1,6 @@
-﻿using Domain;
-using Domain.Exceptions;
+﻿using Domain.Exceptions;
+using Domain.Helpers.Hashing;
+using Domain.Options;
 using EFCore;
 using EFCore.Models;
 using Microsoft.Extensions.Options;
@@ -12,18 +13,17 @@ namespace Services
     public class AuthService : DbServiceBase<RefreshTokenDto, RefreshToken>, IAuthService
     {
         RefreshTokenOptions _authOptions;
-        IHasherService _hasher;
-        public AuthService(IRepository repository, IOptions<RefreshTokenOptions> authOptions, IHasherService hasher) : base(repository) 
+        public AuthService(IRepository repository, IOptions<RefreshTokenOptions> authOptions) : base(repository) 
         {
             _authOptions = authOptions.Value;
-            _hasher = hasher;
+            
         }
         
 
 
         public async Task<RefreshTokenDto> GenerateRefreshToken(int userId)
         {
-            var existingToken = _dbRepository.GetItems<RefreshToken>().FirstOrDefault(u => u.UserId == userId);
+            var existingToken = _dbRepository.Set<RefreshToken>().FirstOrDefault(u => u.UserId == userId);
 
             if(existingToken is not null)
             {
@@ -42,7 +42,7 @@ namespace Services
 
         
 
-        string GenerateToken() => _hasher.GetHashForToken(_authOptions.GetRandomValue());
+        string GenerateToken() => _authOptions.GetRandomValue().GetRandomHash();
 
         RefreshToken GetRefreshToken(User user) => new RefreshToken
         {
@@ -60,11 +60,11 @@ namespace Services
 
         public async Task<RefreshTokenDto> UpdateRefreshToken(int userId, string oldToken)
         {
-            var existingToken = _dbRepository.GetItems<RefreshToken>().FirstOrDefault(u => 
+            var existingToken = _dbRepository.Set<RefreshToken>().FirstOrDefault(u => 
                 u.UserId == userId && 
                 u.Token == oldToken && 
                 u.Expires >= DateTimeOffset.Now
-            ) ?? throw new UserDataNotValidException("refreshtoken is invalid"); ;
+            ) ?? throw new UserDataNotValidException("refreshtoken is invalid", 10); ;
 
 
 

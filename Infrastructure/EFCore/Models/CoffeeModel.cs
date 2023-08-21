@@ -11,4 +11,6 @@ public class Coffee : EntityBase
     public float AvgScore { get; set; }
 
     public int ScoreCount { get; set; }
+
+    public List<Comment> Comments { get; set; } = null!;
 }

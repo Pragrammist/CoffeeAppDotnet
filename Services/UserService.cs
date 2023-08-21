@@ -1,5 +1,6 @@
-using Domain;
+using Domain.Enums;
 using Domain.Exceptions;
+using Domain.Helpers.Hashing;
 using EFCore;
 using EFCore.Models;
 using Mapster;
@@ -12,25 +13,23 @@ namespace Services
 {
     public class UserService : DbServiceBase<UserDto, User>, IUserService
     {
-        readonly IHasherService _passwordHasher;
-        readonly IAuthService _authService;
-        public UserService(IRepository repository, IHasherService passwordHasher, IAuthService authService) : base(repository)
+        
+        public UserService(IRepository repository) : base(repository)
         {
-            _passwordHasher = passwordHasher;
-            _authService = authService;
+            
         }
         public async Task<UserDto> LoginUser(LoginUserDto loginUserData)
         {
-            loginUserData.Password = _passwordHasher.HashPassword(loginUserData.Password);
+            loginUserData.Password = loginUserData.Password.Hash();
 
-            var user = _dbRepository.GetItems<User>().FirstOrDefault(f => 
+            var user = _dbRepository.Context.Users.FirstOrDefault(f => 
                 (
                     f.Email == loginUserData.LoginOrEmail || 
                     f.Login == loginUserData.LoginOrEmail
                 ) && f.Password == loginUserData.Password);
 
             if (user is null)
-                throw new UserDataNotValidException("user not found");
+                throw new UserDataNotValidException("user not found", 404);
 
             return await Task.FromResult(user.Adapt<UserDto>());
         }
@@ -45,14 +44,14 @@ namespace Services
 
         public async Task<UserDto> CreateUser(CreateUserDto createUserData)
         {
-            createUserData.Password = _passwordHasher.HashPassword(createUserData.Password);
+            createUserData.Password = createUserData.Password.Hash();
 
-            var extUser = _dbRepository.GetItems<User>().FirstOrDefault(f => f.Email == createUserData.Email || f.Login == createUserData.Login);
+            var extUser = _dbRepository.Context.Users.FirstOrDefault(f => f.Email == createUserData.Email || f.Login == createUserData.Login);
 
             if(extUser is not null)
-                throw new UserDataNotValidException("user already exists");
+                throw new UserDataNotValidException("user already exists", 401);
 
-            var newUserId = await base.Create(createUserData.Adapt<User>());
+            var newUserId = await base.Create(createUserData);
 
             return newUserId;
         }
@@ -61,9 +60,7 @@ namespace Services
         {
             await GetUserAndCheckRole(id);
 
-            await _dbRepository.Delete<User>(id);
-
-            await _dbRepository.Context.SaveChangesAsync();
+            await base.Delete(id);
         }
 
         public async Task<string> GenerateNewPasswordForModerator(int id)
@@ -71,7 +68,7 @@ namespace Services
             var user = await GetUserAndCheckRole(id);
 
             var newPassword = NewRandomPassword();
-            user.Password = _passwordHasher.HashPassword(newPassword);
+            user.Password = newPassword.Hash();
 
             await base.Edit(user, true);
 
@@ -91,18 +88,20 @@ namespace Services
 
         async Task<User> GetUserAndCheckRole(int id)
         {
-            var user = await _dbRepository.GetByIdAsync<User>(id);
+            var user = await base.GetByIdEntityAsync(id);
 
             if (user.Role != UserRole.MODERATOR)
-                throw new PermissionDenied($"user with {id} isn't moderator");
+                throw new PermissionDenied($"user with {id} isn't moderator", 403);
 
             return user;
         }
 
-        public IQueryable<UserDto> GetModerators() => base._dbRepository
-            .GetItems<User>()
+        public IQueryable<UserDto> GetModerators() => 
+            _dbRepository.Context.Users
             .Where(u => u.Role == UserRole.MODERATOR)
             .ProjectToType<UserDto>();
+            
+            
 
 
 

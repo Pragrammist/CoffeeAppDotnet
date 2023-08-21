@@ -1,4 +1,5 @@
 ﻿using Domain.Exceptions;
+using Host.Models.Errors;
 
 namespace Host.Middlewares
 {
@@ -19,8 +20,9 @@ namespace Host.Middlewares
             }
             catch (CoffeeApplicationException ex)
             {
-                context.Response.StatusCode = ex.StatusCode;
-                await context.Response.WriteAsync(ex.Message);
+                context.Response.StatusCode = ex.HttpStatusCode;
+                var error = new CoffeeExceptionError(ex.MessageStatusCode, ex.Message);
+                await context.Response.WriteAsJsonAsync(error);
             }
             catch
             {

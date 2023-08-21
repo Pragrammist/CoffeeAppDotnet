@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 using Services.Dtos.User;
-using Host.Models;
 using Mapster;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,6 +9,8 @@ using Microsoft.Extensions.Options;
 using Domain;
 using EFCore.Models;
 using Domain.Exceptions;
+using Host.Infrastructure.Consts;
+using Host.Models.Users;
 
 namespace Host.Controllers
 {

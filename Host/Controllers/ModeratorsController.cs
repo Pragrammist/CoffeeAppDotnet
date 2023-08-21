@@ -1,5 +1,5 @@
 ﻿using EFCore.Models;
-using Host.Models;
+using Host.Models.Users;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

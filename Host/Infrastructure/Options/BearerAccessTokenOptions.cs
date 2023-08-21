@@ -3,11 +3,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-class CorsOptions
-{
-    public string[] AllowerOrigins { get; set; } = null!;
-}
-
 
 public class BearerAccessTokenOptions
 {

@@ -1,5 +1,4 @@
-using Domain;
-using System.ComponentModel.DataAnnotations;
+using Domain.Enums;
 
 namespace Services.Dtos.User
 {
