@@ -1,7 +1,7 @@
 ﻿using Host.Models.Coffees;
 using Mapster;
 using Services.Dtos.Coffee;
-using static Domain.Consts.SepartaratorsConsts;
+using Host.Infrastructure.Helpers.PhotoDataHelpers;
 
 namespace Host.Infrastructure.Mapping.Coffee
 {
@@ -15,6 +15,6 @@ namespace Host.Infrastructure.Mapping.Coffee
             TypeAdapterConfig<CreateCoffeeModel, CreateCoffeeDto>.NewConfig().Map(d => d.Photos, s => s.Photos.JoinFileNames());
         }
 
-        static string JoinFileNames(this IEnumerable<IFormFile> files) => String.Join(FILES_SEPORATOR_IN_STORE, files.Select(s => s.FileName));
+        
     }
 }

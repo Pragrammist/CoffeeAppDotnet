@@ -29,6 +29,8 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddCors();
 builder.Services.AddControllers();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.Configure<FileStoringOptions>(builder.Configuration.GetSection("Files"));
 builder.Services.Configure<BearerAccessTokenOptions>(builder.Configuration.GetSection("Auth:Bearer"));
 

@@ -23,5 +23,9 @@ public class Comment : EntityBase
 
     public int? CommentId { get; set; }
 
+    public Comment? CommentToAnswer { get; set; }
+
+    public List<Comment> Comments { get; set;} = new List<Comment>();
+
 
 }

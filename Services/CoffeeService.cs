@@ -36,12 +36,14 @@ namespace Services
 
         public async Task<CoffeeDetailsDto> GetCoffeeDetails(int coffeeId)
         => (await _dbRepository.Context.Coffees.Include(c => c.Comments)
-            .GetById(coffeeId))
+            .GetByIdAsync(coffeeId))
             .Adapt<CoffeeDetailsDto>();
 
 
 
         public IQueryable<CoffeeDto> GetCoffees()
-        => base.GetItems<CoffeeDto>();
+        => base._dbRepository.Context.Coffees
+            .AsQueryable()
+            .ProjectToType<CoffeeDto>();
     }
 }

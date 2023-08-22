@@ -9,7 +9,7 @@ namespace Host.Infrastructure.ValidationAttributes
         public PhotoAttribute() 
         {
             ErrorMessage = $"Проверьте фотографию. Размер фотографии не может быть больше {MAX_LENGTH_PHOTO_MB}мб, разрешение должно быть: {HEIGHT_IMAGE_SIZE}x{WIDTH_IMAGE_SIZE} пикселей";
-        }
+        }   
         readonly string[] FILE_EXTS = new string[] { ".jpg", "jpeg" };
         public override bool IsValid(object? value)
         {

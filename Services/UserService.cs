@@ -91,7 +91,7 @@ namespace Services
             var user = await base.GetByIdEntityAsync(id);
 
             if (user.Role != UserRole.MODERATOR)
-                throw new PermissionDenied($"user with {id} isn't moderator", 403);
+                throw new PermissionDeniedException($"user with {id} isn't moderator", 403);
 
             return user;
         }

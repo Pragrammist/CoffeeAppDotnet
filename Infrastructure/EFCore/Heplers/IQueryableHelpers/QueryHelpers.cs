@@ -11,7 +11,7 @@ namespace EFCore.Heplers.IQueryableHelpers
 {
     public static class QueryHelpers
     {
-        public static async Task<TEntity> GetById<TEntity>(this IQueryable<TEntity> entities, int id) where TEntity : EntityBase =>
+        public static async Task<TEntity> GetByIdAsync<TEntity>(this IQueryable<TEntity> entities, int id) where TEntity : EntityBase =>
         await entities.FirstOrDefaultAsync(e => e.Id == id) ?? 
             throw new NotFoundException($"{id} of {nameof(TEntity)}");
     }

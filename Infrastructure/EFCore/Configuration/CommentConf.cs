@@ -9,7 +9,7 @@ namespace EFCore.Configuration
     {
         public void Configure(EntityTypeBuilder<Comment> builder)
         {
-            builder.HasOne<Comment>().WithMany().HasForeignKey(k => k.CommentId);
+            builder.HasOne(c => c.CommentToAnswer).WithMany(c => c.Comments).HasForeignKey(k => k.CommentId);
             builder.HasOne(c => c.Coffee).WithMany(c => c.Comments).HasForeignKey(k => k.CoffeeId);
             builder.HasOne(c => c.User).WithMany().HasForeignKey(k => k.UserId);
         }
