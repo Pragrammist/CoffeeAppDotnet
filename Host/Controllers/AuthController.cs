@@ -73,7 +73,7 @@ namespace Host.Controllers
             var user = await _userService.LoginUser(loginUserModel.Adapt<LoginUserDto>());
             return await GetUserResult(user);
         }
-        public string AccessToken(UserDto user)
+        string AccessToken(UserDto user)
         {
             var claims = GetClaims(user);
 

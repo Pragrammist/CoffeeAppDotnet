@@ -39,6 +39,14 @@ builder.Services.AddAuthorization();
 builder.Services.RegisterDataLayer(builder.Configuration);
 builder.Services.AddAppServices(builder.Configuration);
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options => {
+    var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename), includeControllerXmlComments: true);
+});
+builder.Services.AddSwaggerGen();
+
+
 
 
 var app = builder.Build();
@@ -67,6 +75,12 @@ var app = builder.Build();
 
 var corsOptions = builder.Configuration.GetSection("Cors").Get<CorsOptions>() ?? throw new NullReferenceException("Cors options is null");
 app.UseMiddleware<HandlingCoffeeApplicationExceptionsMiddleware>();
+app.UseSwagger();
+app.UseSwaggerUI(options => {
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
+
 app.UseCors(builder => builder.WithOrigins(corsOptions.AllowerOrigins).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
 app.UseRouting();

@@ -28,6 +28,7 @@ namespace Host.Controllers
 
         
         [AllowAnonymous]
+        [HttpGet]
         public async  Task<IActionResult> GetCoffee(int id)
         {
             var coffee = await _coffeeService.GetCoffeeDetails(id);
