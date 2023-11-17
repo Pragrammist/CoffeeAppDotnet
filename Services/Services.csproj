@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\EfCore\EFCore.csproj" />
+    <ProjectReference Include="..\Infrastructure\EFCore\EFCore.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
