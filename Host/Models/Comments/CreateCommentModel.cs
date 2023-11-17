@@ -8,8 +8,6 @@
 
         public int CoffeeId { get; set; }
 
-        public int UserId { get; set; }
-
         public IEnumerable<IFormFile>? Photos { get; set; }
     }
 }
