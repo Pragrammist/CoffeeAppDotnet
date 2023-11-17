@@ -9,9 +9,6 @@ namespace Host.Models.Comments
 
 
         public int CommentId { get; set; }
-        
-
-        public string Photos { get; set; } = null!;
     }
     
 }

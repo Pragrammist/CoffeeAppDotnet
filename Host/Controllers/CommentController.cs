@@ -2,7 +2,6 @@
 using Domain.Enums;
 using Domain.Exceptions;
 using Host.Infrastructure.Consts;
-using Host.Models.Coffees;
 using Host.Models.Comments;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +27,7 @@ namespace Host.Controllers
 
         [Authorize]
         [HttpPost]
-        public async  Task<IActionResult> CreateComment(CreateCommentModel createCommentModel) 
+        public async  Task<IActionResult> CreateComment([FromForm]CreateCommentModel createCommentModel) 
         {
             if(createCommentModel.Photos is not null)
                 await WriteFiles(createCommentModel.Photos);
@@ -57,7 +56,7 @@ namespace Host.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> EditComment(EditCommentModel editCommentModel)
+        public async Task<IActionResult> EditComment([FromForm]EditCommentModel editCommentModel)
         {
             if(editCommentModel.Photos is not null)
                 await WriteFiles(editCommentModel.Photos);
