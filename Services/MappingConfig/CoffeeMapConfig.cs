@@ -10,7 +10,8 @@ namespace Services.MappingConfig
 
         public static void SetCoffeeMapping()
         {
-            TypeAdapterConfig<Coffee, CoffeeDto>.NewConfig().Map(d => d.Photo, s => s.SplitPhotos().First());
+            TypeAdapterConfig<Coffee, CoffeeDto>.NewConfig().Map(d => d.Photo, s => s.SplitPhotos().First())
+                .Include<Coffee, CoffeeDetailsDto>();
 
             TypeAdapterConfig<Coffee, CoffeeDetailsDto>.NewConfig().Map(d => d.Photos, s => s.SplitPhotos());
         }

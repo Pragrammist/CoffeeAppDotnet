@@ -1,4 +1,6 @@
-﻿namespace Host.Models.Comments
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Host.Models.Comments
 {
     public class CreateCommentModel
     {

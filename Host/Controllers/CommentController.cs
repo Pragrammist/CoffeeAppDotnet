@@ -89,8 +89,8 @@ namespace Host.Controllers
         public async Task<IActionResult> AnswerToComment(CreateAnswerToCommentModel createAnswer)
         {
             var answer = createAnswer.Adapt<CreateAnswerToCommentDto>();
-            answer.UserId = int.Parse(User.FindFirstValue(ClaimsConst.ID) ?? throw new PermissionDeniedException(createAnswer.Id, 400));
-            answer.CurrentUserRole = Enum.Parse<UserRole>(User.FindFirstValue(ClaimsConst.ROLE) ?? throw new PermissionDeniedException(createAnswer.Id, 400));
+            answer.UserId = int.Parse(User.FindFirstValue(ClaimsConst.ID) ?? throw new PermissionDeniedException(createAnswer.Text, 400));
+            answer.CurrentUserRole = Enum.Parse<UserRole>(User.FindFirstValue(ClaimsConst.ROLE) ?? throw new PermissionDeniedException(createAnswer.Text, 400));
             var result = await _commentService.CreateAnswerToComment(
                 answer
             );

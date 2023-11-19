@@ -9,7 +9,7 @@ namespace Host.Infrastructure.Mapping.Coffee
     public static class CommentMappingSettings
     {
         
-        public static void SetCoffeeMapping()
+        public static void SetCommentMapping()
         {
             TypeAdapterConfig<CreateCommentModel, CreateCommentDto>.NewConfig().Map(d => d.Photos, s => s.Photos != null ? s.Photos.JoinFileNames() : string.Empty); 
 

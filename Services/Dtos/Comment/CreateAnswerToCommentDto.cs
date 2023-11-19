@@ -4,7 +4,8 @@ namespace Services.Dtos.Comment
 {
     public class CreateAnswerToCommentDto
     {
-        public int Id { get; set; }
+
+        public int CoffeeId { get; set; }
 
         public string Text { get; set; } = null!;
 

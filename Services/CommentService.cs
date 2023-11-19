@@ -113,13 +113,20 @@ namespace Services
 
         public async Task<CommentDetailsDto> CreateAnswerToComment(CreateAnswerToCommentDto data)
         {
-            var commentIsAnswerFromModeratorToCurrentUser = _dbRepository.Context.Comments
+            var comment = await _dbRepository.Context.Comments
                 .Include(c => c.User)
                 .Include(c => c.Comments)
-                .Include(c => c.CommentToAnswer)
-                .Any(c => c.Id == data.Id &&
-                    c.User.Role == UserRole.MODERATOR
-                    && c.CommentToAnswer != null && c.CommentToAnswer.User.Id == data.UserId);
+                .Include(c => c.CommentToAnswer).ThenInclude(a => a != null ? a.User : null)
+                .FirstOrDefaultAsync(c => c.Id == data.CommentId);
+
+            if(comment is null)
+                throw new NotFoundException(data.CommentId);
+
+            var commentIsAnswerFromModeratorToCurrentUser = 
+                    comment.User.Role == UserRole.MODERATOR
+                    && comment.CommentToAnswer != null && comment.CommentToAnswer.User.Id == data.UserId;
+            
+            data.CoffeeId = comment.CoffeeId;
 
             var canAnswer = data.CurrentUserRole == UserRole.MODERATOR || commentIsAnswerFromModeratorToCurrentUser;
 

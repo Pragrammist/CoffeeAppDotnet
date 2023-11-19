@@ -10,7 +10,8 @@ namespace Services.MappingConfig
     {
         public static void SetCommentMapping()
         {
-            TypeAdapterConfig<Comment, CommentDto>.NewConfig().Map(d => d.Author, s => s.User.Login);
+            TypeAdapterConfig<Comment, CommentDto>.NewConfig().Map(d => d.Author, s => s.User.Login)
+                .Include<Comment, CommentDetailsDto>();
 
             TypeAdapterConfig<Comment, CommentDetailsDto>.NewConfig().Map(d => d.Photos, s => s.SplitPhotos());
 

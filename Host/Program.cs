@@ -10,6 +10,7 @@ using Domain.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 CoffeeMappingSettings.SetCoffeeMapping();
+CommentMappingSettings.SetCommentMapping();
 
 // Add services to the container.
 
